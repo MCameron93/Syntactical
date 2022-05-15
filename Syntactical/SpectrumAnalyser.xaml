@@ -1,11 +1,20 @@
 ﻿<UserControl
     x:Class="Syntactical.SpectrumAnalyser"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Canvas Background="Black">
-        <Polyline
-            x:Name="polyline1"
-            Stroke="Yellow"
-            StrokeThickness="1" />
-    </Canvas>
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:progresspanel="clr-namespace:Syntactical.ProgressPanel">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <progresspanel:ProgressPanelControl x:Name="ProgressPanelControl" />
+        <Canvas Grid.Column="1" Background="Transparent">
+            <Polyline
+                x:Name="polyline1"
+                Stroke="Black"
+                StrokeThickness="1" />
+        </Canvas>
+
+    </Grid>
 </UserControl>

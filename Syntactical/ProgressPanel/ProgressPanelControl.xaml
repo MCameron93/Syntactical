@@ -8,6 +8,7 @@
     d:DataContext="{d:DesignInstance Type=local:ProgressPanelViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Background="Orange"
     mc:Ignorable="d">
     <Grid>
         <ListView ItemsSource="{Binding ProgressBars}">

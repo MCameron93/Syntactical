@@ -8,25 +8,24 @@
     xmlns:progresspanel="clr-namespace:Syntactical.ProgressPanel"
     Title="Dog"
     Width="800"
-    Height="450"
-    MaxHeight="450"
+    Height="500"
     d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
     mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <progresspanel:ProgressPanelControl DataContext="{Binding ProgressPanelViewModel}" />
-        <local:SpectrumAnalyser x:Name="SpectrumAnalyser" />
-
-        <StackPanel Grid.Column="1" Orientation="Vertical">
+        <StackPanel Grid.Row="0" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Fft: " />
                 <Label Content="{Binding FftDisplay}" />
             </StackPanel>
             <Button Command="{Binding PlayCommand}" Content="Play" />
         </StackPanel>
+
+        <local:SpectrumAnalyser x:Name="SpectrumAnalyser" Grid.Row="1" />
+
     </Grid>
 </Window>

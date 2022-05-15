@@ -1,5 +1,7 @@
 ﻿using NAudio.Dsp;
+using Syntactical.ProgressPanel;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,7 +12,7 @@ namespace Syntactical
     /// </summary>
     public partial class SpectrumAnalyser : UserControl
     {
-        private const int binsPerPoint = 16;
+        private const int binsPerPoint = 2;
         private int bins = 512;
 
         // reduce the number of points we plot for a less jagged line?
@@ -19,9 +21,14 @@ namespace Syntactical
         private double xScale = 200;
         // guess a 1024 size FFT, bins is half FFT size
 
+        public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
         public SpectrumAnalyser()
         {
             InitializeComponent();
+
+            ProgressPanelViewModel = new ProgressPanelViewModel();
+            this.ProgressPanelControl.DataContext = ProgressPanelViewModel;
+
             CalculateXScale();
             SizeChanged += SpectrumAnalyser_SizeChanged;
         }
@@ -58,10 +65,21 @@ namespace Syntactical
             if (index >= polyline1.Points.Count)
             {
                 polyline1.Points.Add(p);
+                
             }
             else
             {
                 polyline1.Points[index] = p;
+
+                if (index % 16 == 0)
+                {
+                    int pIndex = index / 16;
+                    if (pIndex < ProgressPanelViewModel.ProgressBars.Length)
+                    {
+                        ProgressPanelViewModel.ProgressBars[pIndex].Value = 50 - (p.Y / 4);
+                    }
+                }
+                
             }
         }
 
