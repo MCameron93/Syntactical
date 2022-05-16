@@ -3,34 +3,32 @@ using Syntactical.ProgressPanel;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Timers;
 using System.Windows.Input;
 
 namespace Syntactical
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel
     {
         private AudioPlayback audioPlayback;
         private readonly SpectrumAnalyser spectrumAnalyser;
 
-        public MainWindowViewModel(ProgressPanelViewModel progressPanelViewModel, SpectrumAnalyser spectrumAnalyser)
+        public MainWindowViewModel(ProgressPanelViewModel progressPanelViewModel)
         {
             PlayCommand = new RelayCommand(Play);
             ProgressPanelViewModel = progressPanelViewModel ?? throw new ArgumentNullException(nameof(progressPanelViewModel));
-            this.spectrumAnalyser = spectrumAnalyser;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand PlayCommand { get; }
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
-
-        public float FftDisplay { get; set; }
+        public AudioSpectrum AudioSpectrum { get; set; }
 
         private void audioGraph_FftCalculated(object sender, FftEventArgs e)
         {
             if (spectrumAnalyser != null)
             {
                 spectrumAnalyser.Update(e.Result);
+                AudioSpectrum.Update(e.Result);
             }    
         }
 

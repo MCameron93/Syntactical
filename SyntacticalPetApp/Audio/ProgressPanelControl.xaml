@@ -1,0 +1,33 @@
+﻿<UserControl
+    x:Class="SyntacticalPetApp.ProgressPanelControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListView ItemsSource="{Binding ProgressBars}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label
+                            Width="30"
+                            Height="20"
+                            VerticalContentAlignment="Center"
+                            Content="{Binding Label}"
+                            FontSize="10" />
+                        <ProgressBar
+                            Width="200"
+                            Height="10"
+                            HorizontalAlignment="Stretch"
+                            Value="{Binding Value}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Canvas Grid.Column="1" Background="Transparent">
+            <Polyline
+                x:Name="polyline1"
+                Stroke="Black"
+                StrokeThickness="1" />
+        </Canvas>
+
+    </Grid>
+</UserControl>

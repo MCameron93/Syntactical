@@ -26,7 +26,6 @@ namespace Syntactical
         {
             InitializeComponent();
 
-            ProgressPanelViewModel = new ProgressPanelViewModel();
             this.ProgressPanelControl.DataContext = ProgressPanelViewModel;
 
             CalculateXScale();

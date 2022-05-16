@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syntactical", "Syntactical\Syntactical.csproj", "{E5D2AD92-8009-4ED9-A5D4-35289EB3936E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntacticalPetApp", "SyntacticalPetApp\SyntacticalPetApp.csproj", "{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E5D2AD92-8009-4ED9-A5D4-35289EB3936E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5D2AD92-8009-4ED9-A5D4-35289EB3936E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5D2AD92-8009-4ED9-A5D4-35289EB3936E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

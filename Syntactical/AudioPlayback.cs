@@ -10,7 +10,7 @@ using NAudio.Wave;
 
 namespace Syntactical
 {
-    class AudioPlayback : IDisposable
+    public class AudioPlayback : IDisposable
     {
         private IWavePlayer playbackDevice;
         private WaveStream fileStream;
