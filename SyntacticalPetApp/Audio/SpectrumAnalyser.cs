@@ -9,11 +9,44 @@ namespace SyntacticalPetApp.Audio
 {
     public class SpectrumAnalyser
     {
-        private const int binsPerPoint = 2;
+        private const int binsPerPoint = 128;
         private int bins = 512;
 
         public SpectrumAnalyser()
         {
+        }
+
+        public double[] GetPercentages(Complex[] fftResults, int samples, int pointsPerSample)
+        {
+            double[] percentages = new double[samples];
+            int binCount = fftResults.Length / samples;
+
+            for (int i = 0; i < percentages.Length; i++)
+            {
+                double percentageTotals = 0;
+                for (int sampleIndex = 0; sampleIndex < pointsPerSample; sampleIndex++)
+                {
+                    percentageTotals += GetPercentage(fftResults[i * samples + sampleIndex]);
+                }
+                percentages[i] = percentageTotals / pointsPerSample;
+            }
+            //int newBins = fftResults.Length / samples;
+
+            //for (int i = 0; i < newBins; i+=samples)
+            //{
+            //    double percentageTotals = 0;
+            //    for (int n = 0; n < pointsPerSample; n++)
+            //    {
+            //        int fftIndex = i * pointsPerSample + n;
+            //        Complex complex = fftResults[fftIndex];
+            //        percentageTotals += GetPercentage(complex);
+            //    }
+
+            //    double averagePercent = percentageTotals / pointsPerSample;
+            //    percentages[i] = averagePercent;
+            //}
+
+            return percentages;
         }
 
         internal double[] GetPercentages(Complex[] fftResults)
@@ -42,11 +75,12 @@ namespace SyntacticalPetApp.Audio
             return percentages;
         }
 
-        private double GetPercentage(Complex c)
+        private double GetPercentage(Complex complex)
         {
             // not entirely sure whether the multiplier should be 10 or 20 in this case.
             // going with 10 from here http://stackoverflow.com/a/10636698/7532
-            double intensityDB = 10 * Math.Log10(Math.Sqrt(c.X * c.X + c.Y * c.Y));
+            double magnitude = Math.Sqrt(complex.X * complex.X + complex.Y * complex.Y);
+            double intensityDB = 10 * Math.Log10(magnitude);
             double minDB = -90;
             if (intensityDB < minDB) intensityDB = minDB;
             double percent = intensityDB / minDB;

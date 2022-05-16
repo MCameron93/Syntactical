@@ -26,7 +26,7 @@ namespace SyntacticalPetApp.Audio
                 {
                     ProgressBars[i] = new ProgressBarViewModel() { Label = i.ToString() };
                 }
-                ProgressBars[i].Value = percentages[i] * 100;
+                ProgressBars[i].Value = (1 - percentages[i]) * 100;
             }
             
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProgressBars)));

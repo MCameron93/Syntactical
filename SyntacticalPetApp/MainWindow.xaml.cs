@@ -40,7 +40,7 @@ namespace SyntacticalPetApp
             {
                 return;
             }
-            double[] percentages = spectrumAnalyser.GetPercentages(e.Result);
+            double[] percentages = spectrumAnalyser.GetPercentages(e.Result, 8, 2);
             
             ProgressPanelViewModel.UpdatePercentages(percentages);
 
