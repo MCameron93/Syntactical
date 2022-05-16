@@ -10,7 +10,7 @@ namespace SyntacticalPetApp.Audio
         private double value;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public string Label
         {
             get => label;

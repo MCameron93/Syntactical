@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SyntacticalPetApp.Audio
 {
@@ -38,7 +34,7 @@ namespace SyntacticalPetApp.Audio
 
                 ProgressBars[i].Value = Math.Max(5, val * scaleValue * 100);
             }
-            
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProgressBars)));
         }
     }

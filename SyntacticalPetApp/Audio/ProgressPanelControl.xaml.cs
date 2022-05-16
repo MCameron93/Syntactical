@@ -1,9 +1,4 @@
-﻿using NAudio.Dsp;
-using SyntacticalPetApp.Audio;
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace SyntacticalPetApp
 {

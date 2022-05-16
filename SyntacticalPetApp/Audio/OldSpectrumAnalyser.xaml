@@ -9,6 +9,5 @@
                 Stroke="Black"
                 StrokeThickness="1" />
         </Canvas>
-
     </Grid>
 </UserControl>
