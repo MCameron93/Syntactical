@@ -4,12 +4,13 @@ namespace SyntacticalPetApp.Audio
 {
     public class ProgressBarViewModel : INotifyPropertyChanged
     {
+        public double ScaleValue { get; set; }
         private string label;
 
         private double value;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public string Label
         {
             get => label;
@@ -35,5 +36,9 @@ namespace SyntacticalPetApp.Audio
                 }
             }
         }
+
+        public double Offset { get; internal set; }
+        public double MinPercent { get; internal set; } = 0.0;
+        public double MaxPercent { get; internal set; } = 1.0;
     }
 }

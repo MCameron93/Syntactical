@@ -17,6 +17,7 @@ namespace SyntacticalPetApp
         public MainWindow()
         {
             ProgressPanelViewModel = new ProgressPanelViewModel();
+
             DataContext = this;
             InitializeComponent();
 
@@ -26,7 +27,7 @@ namespace SyntacticalPetApp
             audioPlayback.FftCalculated += OnFftCalculated;
                         
             string fileName = Path.Combine(Directory.GetCurrentDirectory(),
-                "Resources", "Audio", "you_give_me_feelings_skip_intro.mp3");
+                "Resources", "Audio", "you_give_me_feelings.mp3");
             audioPlayback.Load(fileName);
             
             audioPlayback.Play();
@@ -36,11 +37,19 @@ namespace SyntacticalPetApp
         private int updateCount;
         private void OnFftCalculated(object sender, FftEventArgs e)
         {
+            // Make custom panel with a few progress bars. 
+            // On update, get new fft values.
+            // Assign values to specific progress bars.
+            // Assign scaler to progress bar view model.
+            // Compute display percentage based on scaler value and actual percentage.
+
             if (updateCount++ % 2 == 0)
             {
-                return;
+                //return;
             }
-            double[] percentages = spectrumAnalyser.GetPercentages(e.Result, 8, 2);
+
+            double[] percentages = spectrumAnalyser.GetPercentages(e.Result, 
+                samples: ProgressPanelViewModel.ProgressBars.Length, pointsPerSample: 1);
             
             ProgressPanelViewModel.UpdatePercentages(percentages);
 

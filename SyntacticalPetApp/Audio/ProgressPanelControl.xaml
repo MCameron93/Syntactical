@@ -8,16 +8,20 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Label
-                            Width="30"
-                            Height="20"
+                            Width="110"
                             VerticalContentAlignment="Center"
                             Content="{Binding Label}"
-                            FontSize="10" />
+                            FontSize="20" />
                         <ProgressBar
                             Width="200"
-                            Height="10"
+                            Height="40"
                             HorizontalAlignment="Stretch"
                             Value="{Binding Value}" />
+                        <Label
+                            Width="110"
+                            VerticalContentAlignment="Center"
+                            Content="{Binding Value}"
+                            FontSize="20" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
