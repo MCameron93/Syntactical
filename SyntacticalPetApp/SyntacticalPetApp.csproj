@@ -158,6 +158,9 @@
   <ItemGroup>
     <Resource Include="Resources\Art\zach_spritesheet0.png" />
     <Resource Include="Resources\Art\zach_spritesheet1.png" />
+    <Resource Include="Resources\Art\zach_idle_01.png" />
+    <Resource Include="Resources\Art\zach_idle_02.png" />
+    <Resource Include="Resources\Art\zach_idle_03.png" />
     <Content Include="Resources\Audio\you_give_me_feelings.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -24,8 +24,10 @@ namespace SyntacticalPetApp
             {
                 ImagePaths = new[]
                 {
-                    "/SyntacticalPetApp;component/Resources/Art/zach_spritesheet0.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_spritesheet1.png"
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
                 }
             };
 
@@ -52,8 +54,9 @@ namespace SyntacticalPetApp
                 "Resources", "Audio", "you_give_me_feelings.mp3");
             audioPlayback.Load(fileName);
 
-            audioPlayback.Play();
             audioPlayback.Volume = 0;
+            DogSpriteViewModel.PlayAnim();
+            audioPlayback.Play();
         }
 
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
