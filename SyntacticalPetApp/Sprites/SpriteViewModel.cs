@@ -1,61 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Timers;
 
 namespace SyntacticalPetApp.Sprites
 {
     public class SpriteViewModel : INotifyPropertyChanged
     {
-        private Timer animTimer;
-        private Animation currentAnim;
-        private int currentFrame = 0;
+        private readonly Animator animator;
 
-        public SpriteViewModel()
+        public SpriteViewModel(Animator animator)
         {
-            animTimer = new Timer();
-            animTimer.Elapsed += OnAnimTimerElapsed;
+            this.animator = animator ?? throw new ArgumentNullException(nameof(animator));
+            animator.FrameChanged += OnFrameChanged;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Dictionary<string, Animation> Animations { get; set; }
 
-        public string ImagePath
-        {
-            get { return currentAnim?.ImagePaths[currentFrame]; }
-        }
+        public string ImagePath => animator.CurrentFramePath;
 
         public void PlayAnim()
         {
-            animTimer.Start();
+            animator.Play();
         }
 
         public void SetAnimation(string animationName)
         {
             if (Animations.TryGetValue(animationName, out var animation))
             {
-                currentAnim = animation;
-
-                const int beatsPerMinute = 120;
-                const int beatsPerSecond = beatsPerMinute / 60;
-                const int framesPerBeat = 4;
-                const int framesPerSecond = framesPerBeat * beatsPerSecond;
-                const double secondsPerFrame = 1.0 / framesPerSecond;
-
-                animTimer.Interval = TimeSpan.FromSeconds(secondsPerFrame).TotalMilliseconds;
-                animTimer.Stop();
+                animator.SetAnimation(animation);
             }
         }
 
-        private void OnAnimTimerElapsed(object sender, ElapsedEventArgs e)
+        private void OnFrameChanged(object sender, EventArgs e)
         {
-            Console.WriteLine($"{currentFrame}");
-            currentFrame++;
-            if (currentFrame >= currentAnim.Frames)
-            {
-                currentFrame = 0;
-            }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ImagePath)));
         }
     }

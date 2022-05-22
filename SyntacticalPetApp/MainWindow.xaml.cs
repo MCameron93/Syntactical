@@ -1,6 +1,7 @@
 ﻿using NAudio.Extras;
 using SyntacticalPetApp.Audio;
 using SyntacticalPetApp.Sprites;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -19,16 +20,22 @@ namespace SyntacticalPetApp
         public MainWindow()
         {
             ProgressPanelViewModel = new ProgressPanelViewModel();
+            const int beatsPerMinute = 120;
+            const int beatsPerSecond = beatsPerMinute / 60;
+            const int framesPerBeat = 4;
+            const int framesPerSecond = framesPerBeat * beatsPerSecond;
+            const double secondsPerFrame = 1.0 / framesPerSecond;
 
             var dogIdleAnim = new Animation()
             {
-                ImagePaths = new[]
+                FramePaths = new[]
                 {
                     "/SyntacticalPetApp;component/Resources/Art/zach_idle_01.png",
                     "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
                     "/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",
                     "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
-                }
+                },
+                TimeBetweenFrames = TimeSpan.FromSeconds(secondsPerFrame)
             };
 
             var dogAnimations = new Dictionary<string, Animation>
@@ -36,7 +43,8 @@ namespace SyntacticalPetApp
                 { "idle", dogIdleAnim }
             };
 
-            DogSpriteViewModel = new SpriteViewModel()
+            var dogAnimator = new Animator();
+            DogSpriteViewModel = new SpriteViewModel(dogAnimator)
             {
                 Animations = dogAnimations
             };

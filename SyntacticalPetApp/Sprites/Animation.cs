@@ -1,8 +1,11 @@
-﻿namespace SyntacticalPetApp.Sprites
+﻿using System;
+
+namespace SyntacticalPetApp.Sprites
 {
     public class Animation
     {
-        public string[] ImagePaths { get; set; }
-        public int Frames => ImagePaths.Length;
+        public string[] FramePaths { get; set; }
+        public int Frames => FramePaths.Length;
+        public TimeSpan TimeBetweenFrames { get; set; }
     }
 }
