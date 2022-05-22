@@ -20,11 +20,18 @@ namespace SyntacticalPetApp
         public MainWindow()
         {
             ProgressPanelViewModel = new ProgressPanelViewModel();
+
+            // Work out how many seconds there are between each frame based on beats per minute of
+            // the song. We know this is 120 bpm for the song being used here.
             const int beatsPerMinute = 120;
             const int beatsPerSecond = beatsPerMinute / 60;
-            const int framesPerBeat = 4;
-            const int framesPerSecond = framesPerBeat * beatsPerSecond;
-            const double secondsPerFrame = 1.0 / framesPerSecond;
+            
+            // Frames per beat is decided per animation. i.e. How many frames of animation should
+            // there be between each beat in the song.
+            const int idleFramesPerBeat = 4;
+
+            const int idleFramesPerSecond = idleFramesPerBeat * beatsPerSecond;
+            const double idleSecondsPerFrame = 1.0 / idleFramesPerSecond;
 
             var dogIdleAnim = new Animation()
             {
@@ -35,7 +42,7 @@ namespace SyntacticalPetApp
                     "/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",
                     "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
                 },
-                TimeBetweenFrames = TimeSpan.FromSeconds(secondsPerFrame)
+                TimeBetweenFrames = TimeSpan.FromSeconds(idleSecondsPerFrame)
             };
 
             var dogAnimations = new Dictionary<string, Animation>
