@@ -15,8 +15,8 @@ namespace SyntacticalPetApp
         public event EventHandler<MaxSampleEventArgs> MaximumCalculated;
 
         public float Volume
-        { 
-            get => playbackDevice.Volume; 
+        {
+            get => playbackDevice.Volume;
             set => playbackDevice.Volume = value;
         }
 
