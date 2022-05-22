@@ -54,7 +54,6 @@ namespace SyntacticalPetApp
 
             audioPlayback.Play();
             audioPlayback.Volume = 0;
-            
         }
 
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
