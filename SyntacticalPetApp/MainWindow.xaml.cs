@@ -1,5 +1,6 @@
 ﻿using NAudio.Extras;
 using SyntacticalPetApp.Audio;
+using SyntacticalPetApp.Sprites;
 using System.IO;
 using System.Windows;
 
@@ -11,12 +12,13 @@ namespace SyntacticalPetApp
     public partial class MainWindow : Window
     {
         private SpectrumAnalyser spectrumAnalyser;
-
+        public SpriteViewModel DogSpriteViewModel { get; set; }
         private int updateCount;
 
         public MainWindow()
         {
             ProgressPanelViewModel = new ProgressPanelViewModel();
+            DogSpriteViewModel = new SpriteViewModel();
 
             DataContext = this;
             InitializeComponent();
@@ -31,6 +33,8 @@ namespace SyntacticalPetApp
             audioPlayback.Load(fileName);
 
             audioPlayback.Play();
+            audioPlayback.Volume = 0;
+            
         }
 
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }

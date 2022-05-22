@@ -7,12 +7,26 @@ namespace SyntacticalPetApp
 {
     public class AudioPlayback : IDisposable
     {
-        private IWavePlayer playbackDevice;
         private WaveStream fileStream;
+        private IWavePlayer playbackDevice;
 
         public event EventHandler<FftEventArgs> FftCalculated;
 
         public event EventHandler<MaxSampleEventArgs> MaximumCalculated;
+
+        public float Volume
+        { 
+            get => playbackDevice.Volume; 
+            set => playbackDevice.Volume = value;
+        }
+
+        public void Dispose()
+        {
+            Stop();
+            CloseFile();
+            playbackDevice?.Dispose();
+            playbackDevice = null;
+        }
 
         public void Load(string fileName)
         {
@@ -22,10 +36,45 @@ namespace SyntacticalPetApp
             OpenFile(fileName);
         }
 
+        public void Pause()
+        {
+            playbackDevice?.Pause();
+        }
+
+        public void Play()
+        {
+            if (playbackDevice != null && fileStream != null && playbackDevice.PlaybackState != PlaybackState.Playing)
+            {
+                playbackDevice.Play();
+            }
+        }
+
+        public void Stop()
+        {
+            playbackDevice?.Stop();
+            if (fileStream != null)
+            {
+                fileStream.Position = 0;
+            }
+        }
+
         private void CloseFile()
         {
             fileStream?.Dispose();
             fileStream = null;
+        }
+
+        private void CreateDevice()
+        {
+            playbackDevice = new WaveOut { DesiredLatency = 200 };
+        }
+
+        private void EnsureDeviceCreated()
+        {
+            if (playbackDevice == null)
+            {
+                CreateDevice();
+            }
         }
 
         private void OpenFile(string fileName)
@@ -46,49 +95,6 @@ namespace SyntacticalPetApp
                 MessageBox.Show(e.Message, "Problem opening file");
                 CloseFile();
             }
-        }
-
-        private void EnsureDeviceCreated()
-        {
-            if (playbackDevice == null)
-            {
-                CreateDevice();
-            }
-        }
-
-        private void CreateDevice()
-        {
-            playbackDevice = new WaveOut { DesiredLatency = 200 };
-        }
-
-        public void Play()
-        {
-            if (playbackDevice != null && fileStream != null && playbackDevice.PlaybackState != PlaybackState.Playing)
-            {
-                playbackDevice.Play();
-            }
-        }
-
-        public void Pause()
-        {
-            playbackDevice?.Pause();
-        }
-
-        public void Stop()
-        {
-            playbackDevice?.Stop();
-            if (fileStream != null)
-            {
-                fileStream.Position = 0;
-            }
-        }
-
-        public void Dispose()
-        {
-            Stop();
-            CloseFile();
-            playbackDevice?.Dispose();
-            playbackDevice = null;
         }
     }
 }
