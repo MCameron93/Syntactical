@@ -88,6 +88,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Sprites\Animation.cs" />
     <Compile Include="Sprites\SpriteViewModel.cs" />
     <Compile Include="Sprites\SpriteControl.xaml.cs">
       <DependentUpon>SpriteControl.xaml</DependentUpon>

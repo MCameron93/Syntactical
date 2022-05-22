@@ -1,6 +1,7 @@
 ﻿using NAudio.Extras;
 using SyntacticalPetApp.Audio;
 using SyntacticalPetApp.Sprites;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
@@ -18,7 +19,26 @@ namespace SyntacticalPetApp
         public MainWindow()
         {
             ProgressPanelViewModel = new ProgressPanelViewModel();
-            DogSpriteViewModel = new SpriteViewModel();
+
+            var dogIdleAnim = new Animation()
+            {
+                ImagePaths = new[]
+                {
+                    "/SyntacticalPetApp;component/Resources/Art/zach_spritesheet0.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_spritesheet1.png"
+                }
+            };
+
+            var dogAnimations = new Dictionary<string, Animation>
+            {
+                { "idle", dogIdleAnim }
+            };
+
+            DogSpriteViewModel = new SpriteViewModel()
+            {
+                Animations = dogAnimations
+            };
+            DogSpriteViewModel.SetAnimation("idle");
 
             DataContext = this;
             InitializeComponent();
