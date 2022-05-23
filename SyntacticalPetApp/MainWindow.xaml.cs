@@ -17,6 +17,7 @@ namespace SyntacticalPetApp
         private SpectrumAnalyser spectrumAnalyser;
         public SpriteViewModel DogSpriteViewModel { get; set; }
         private int updateCount;
+
         public MainWindow()
         {
             ProgressPanelViewModel = new ProgressPanelViewModel();
@@ -25,7 +26,7 @@ namespace SyntacticalPetApp
             // the song. We know this is 120 bpm for the song being used here.
             const int beatsPerMinute = 120;
             const int beatsPerSecond = beatsPerMinute / 60;
-            
+
             // Frames per beat is decided per animation. i.e. How many frames of animation should
             // there be between each beat in the song.
             double danceSecondsPerFrame = GetSecondsPerFrame(framesPerBeat: 2);
@@ -37,8 +38,7 @@ namespace SyntacticalPetApp
                 double secondsPerFrame = 1.0 / framesPerSecond;
                 return secondsPerFrame;
             }
-            
- 
+
             var dogDanceAnim = new Animation()
             {
                 FramePaths = new[]
@@ -121,7 +121,6 @@ namespace SyntacticalPetApp
             DogSpriteViewModel?.SetAnimation(e);
             DogSpriteViewModel?.PlayAnim();
         }
-
 
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
 
