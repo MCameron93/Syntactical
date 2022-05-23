@@ -28,7 +28,7 @@ namespace SyntacticalPetApp
             
             // Frames per beat is decided per animation. i.e. How many frames of animation should
             // there be between each beat in the song.
-            const int idleFramesPerBeat = 4;
+            const int idleFramesPerBeat = 2;
 
             const int idleFramesPerSecond = idleFramesPerBeat * beatsPerSecond;
             const double idleSecondsPerFrame = 1.0 / idleFramesPerSecond;
@@ -37,10 +37,14 @@ namespace SyntacticalPetApp
             {
                 FramePaths = new[]
                 {
-                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_01.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_03.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_01.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
                 },
                 TimeBetweenFrames = TimeSpan.FromSeconds(idleSecondsPerFrame)
             };
@@ -69,7 +73,7 @@ namespace SyntacticalPetApp
                 "Resources", "Audio", "you_give_me_feelings.mp3");
             audioPlayback.Load(fileName);
 
-            audioPlayback.Volume = 0;
+            audioPlayback.Volume = 1;
             DogSpriteViewModel.PlayAnim();
             audioPlayback.Play();
         }
