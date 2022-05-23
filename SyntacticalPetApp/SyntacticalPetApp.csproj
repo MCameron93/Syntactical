@@ -88,6 +88,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AnimationSchedule.cs" />
+    <Compile Include="AnimationTime.cs" />
     <Compile Include="Sprites\Animation.cs" />
     <Compile Include="Sprites\Animator.cs" />
     <Compile Include="Sprites\SpriteViewModel.cs" />

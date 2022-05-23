@@ -4,6 +4,7 @@ using SyntacticalPetApp.Sprites;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Timers;
 using System.Windows;
 
 namespace SyntacticalPetApp
@@ -16,7 +17,6 @@ namespace SyntacticalPetApp
         private SpectrumAnalyser spectrumAnalyser;
         public SpriteViewModel DogSpriteViewModel { get; set; }
         private int updateCount;
-
         public MainWindow()
         {
             ProgressPanelViewModel = new ProgressPanelViewModel();
@@ -28,34 +28,58 @@ namespace SyntacticalPetApp
             
             // Frames per beat is decided per animation. i.e. How many frames of animation should
             // there be between each beat in the song.
-            const int idleFramesPerBeat = 2;
+            double danceSecondsPerFrame = GetSecondsPerFrame(framesPerBeat: 2);
+            double idleSecondsPerFrame = GetSecondsPerFrame(framesPerBeat: 4);
 
-            const int idleFramesPerSecond = idleFramesPerBeat * beatsPerSecond;
-            const double idleSecondsPerFrame = 1.0 / idleFramesPerSecond;
+            double GetSecondsPerFrame(int framesPerBeat)
+            {
+                int framesPerSecond = framesPerBeat * beatsPerSecond;
+                double secondsPerFrame = 1.0 / framesPerSecond;
+                return secondsPerFrame;
+            }
+            
+ 
+            var dogDanceAnim = new Animation()
+            {
+                FramePaths = new[]
+                {
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_03.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png"
+                },
+                TimeBetweenFrames = TimeSpan.FromSeconds(danceSecondsPerFrame)
+            };
 
-            var dogIdleAnim = new Animation()
+            var dogDanceBAnim = new Animation()
             {
                 FramePaths = new[]
                 {
                     "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_02.png",
                     "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_01.png",
                     "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_03.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_01.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_02.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_03.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_01.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",
-                    //"/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_01.png"
+                },
+                TimeBetweenFrames = TimeSpan.FromSeconds(danceSecondsPerFrame)
+            };
+
+            var dogIdleAnim = new Animation()
+            {
+                FramePaths = new[]
+                {
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
                 },
                 TimeBetweenFrames = TimeSpan.FromSeconds(idleSecondsPerFrame)
             };
 
             var dogAnimations = new Dictionary<string, Animation>
             {
-                { "idle", dogIdleAnim }
+                { "idle", dogIdleAnim },
+                { "dance", dogDanceAnim },
+                { "dance_b", dogDanceBAnim }
             };
 
             var dogAnimator = new Animator();
@@ -78,9 +102,26 @@ namespace SyntacticalPetApp
             audioPlayback.Load(fileName);
 
             audioPlayback.Volume = 1;
+
+            var animationSchedule = new AnimationSchedule(new List<AnimationTime>()
+            {
+                new AnimationTime("dance", TimeSpan.FromSeconds(32.08)),
+                new AnimationTime("idle", TimeSpan.FromSeconds(48.10)),
+                new AnimationTime("dance_b", TimeSpan.FromMinutes(1) + TimeSpan.FromSeconds(4.09)),
+            });
+            animationSchedule.Animate += OnAnimate;
+
             DogSpriteViewModel.PlayAnim();
             audioPlayback.Play();
+            animationSchedule.Start();
         }
+
+        private void OnAnimate(object sender, string e)
+        {
+            DogSpriteViewModel?.SetAnimation(e);
+            DogSpriteViewModel?.PlayAnim();
+        }
+
 
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
 
