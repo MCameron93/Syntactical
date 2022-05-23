@@ -13,7 +13,7 @@ namespace SyntacticalPetApp
 
         public EventHandler<string> Animate;
 
-        public AnimationSchedule(List<AnimationTime> animationTimes)
+        public AnimationSchedule(AnimationTime[] animationTimes)
         {
             foreach (var item in animationTimes.OrderBy(t => t.Time))
             {

@@ -14,8 +14,42 @@ namespace SyntacticalPetApp
 
         public MainWindowViewModel()
         {
+            spectrumAnalyser = new SpectrumAnalyser();
             ProgressPanelViewModel = new ProgressPanelViewModel();
+            var dogAnimator = new Animator();
+            Dictionary<string, Animation> dogAnimations = GetDogAnimations();
+            DogSpriteViewModel = new SpriteViewModel(dogAnimator) { Animations = dogAnimations };
+            DogSpriteViewModel.SetAnimation("idle");
 
+            var dogAnimationScheduler = new AnimationSchedule(new[] 
+            {
+                new AnimationTime("dance", TimeSpan.FromSeconds(32.08)),
+                new AnimationTime("idle", TimeSpan.FromSeconds(48.10)),
+                new AnimationTime("dance_b", TimeSpan.FromMinutes(1) + TimeSpan.FromSeconds(4.09)),
+            });
+            dogAnimationScheduler.Animate += OnDogAnimate;
+
+            // Initialise audio playback.
+            string fileName = Path.Combine(Directory.GetCurrentDirectory(),
+                "Resources", "Audio", "you_give_me_feelings.mp3");
+
+            var audioPlayback = new AudioPlayback();
+            audioPlayback.FftCalculated += OnFftCalculated;
+            audioPlayback.Load(fileName);
+            audioPlayback.Volume = 1;
+
+            // Start all animations, audio, timers, etc.
+            DogSpriteViewModel.PlayAnim();
+            audioPlayback.Play();
+            dogAnimationScheduler.Start();
+        }
+
+        public SpriteViewModel DogSpriteViewModel { get; set; }
+
+        public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
+
+        private static Dictionary<string, Animation> GetDogAnimations()
+        {
             // Work out how many seconds there are between each frame based on beats per minute of
             // the song. We know this is 120 bpm for the song being used here.
             const int beatsPerMinute = 120;
@@ -75,44 +109,12 @@ namespace SyntacticalPetApp
                 { "dance", dogDanceAnim },
                 { "dance_b", dogDanceBAnim }
             };
-
-            var dogAnimator = new Animator();
-            DogSpriteViewModel = new SpriteViewModel(dogAnimator)
-            {
-                Animations = dogAnimations
-            };
-            DogSpriteViewModel.SetAnimation("idle");
-
-            spectrumAnalyser = new SpectrumAnalyser();
-
-            var audioPlayback = new AudioPlayback();
-            audioPlayback.FftCalculated += OnFftCalculated;
-
-            string fileName = Path.Combine(Directory.GetCurrentDirectory(),
-                "Resources", "Audio", "you_give_me_feelings.mp3");
-
-            audioPlayback.Load(fileName);
-            audioPlayback.Volume = 1;
-
-            var animationSchedule = new AnimationSchedule(new List<AnimationTime>()
-            {
-                new AnimationTime("dance", TimeSpan.FromSeconds(32.08)),
-                new AnimationTime("idle", TimeSpan.FromSeconds(48.10)),
-                new AnimationTime("dance_b", TimeSpan.FromMinutes(1) + TimeSpan.FromSeconds(4.09)),
-            });
-            animationSchedule.Animate += OnAnimate;
-
-            DogSpriteViewModel.PlayAnim();
-            audioPlayback.Play();
-            animationSchedule.Start();
+            return dogAnimations;
         }
 
-        public SpriteViewModel DogSpriteViewModel { get; set; }
-        public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
-
-        private void OnAnimate(object sender, string e)
+        private void OnDogAnimate(object sender, string animationName)
         {
-            DogSpriteViewModel?.SetAnimation(e);
+            DogSpriteViewModel?.SetAnimation(animationName);
             DogSpriteViewModel?.PlayAnim();
         }
 
