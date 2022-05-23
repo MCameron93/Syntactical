@@ -37,10 +37,14 @@ namespace SyntacticalPetApp
             {
                 FramePaths = new[]
                 {
-                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_02.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_03.png",
-                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_03.png",
+                    "/SyntacticalPetApp;component/Resources/Art/zach_dance_b_01.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_02.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_03.png",
+                    //"/SyntacticalPetApp;component/Resources/Art/zach_dance_01.png",
                     //"/SyntacticalPetApp;component/Resources/Art/zach_idle_01.png",
                     //"/SyntacticalPetApp;component/Resources/Art/zach_idle_02.png",
                     //"/SyntacticalPetApp;component/Resources/Art/zach_idle_03.png",

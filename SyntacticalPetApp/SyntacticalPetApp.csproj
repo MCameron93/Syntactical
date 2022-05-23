@@ -165,6 +165,9 @@
     <Resource Include="Resources\Art\zach_dance_01.png" />
     <Resource Include="Resources\Art\zach_dance_02.png" />
     <Resource Include="Resources\Art\zach_dance_03.png" />
+    <Resource Include="Resources\Art\zach_dance_b_01.png" />
+    <Resource Include="Resources\Art\zach_dance_b_02.png" />
+    <Resource Include="Resources\Art\zach_dance_b_03.png" />
     <Content Include="Resources\Audio\you_give_me_feelings.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
