@@ -9,7 +9,7 @@ namespace SyntacticalPetApp
 {
     public class MainWindowViewModel
     {
-        private SpectrumAnalyser spectrumAnalyser;
+        private readonly SpectrumAnalyser spectrumAnalyser;
         private int updateCount;
 
         public MainWindowViewModel()
