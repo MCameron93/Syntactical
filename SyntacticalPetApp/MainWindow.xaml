@@ -5,18 +5,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SyntacticalPetApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sprites="clr-namespace:SyntacticalPetApp.Sprites" d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-    Title="MainWindow"
+    xmlns:sprites="clr-namespace:SyntacticalPetApp.Sprites"
+    Title="Dog"
     Width="800"
     Height="450"
+    d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
     Background="DimGray"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid Margin="24">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />

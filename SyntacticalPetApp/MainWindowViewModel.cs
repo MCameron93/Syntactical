@@ -11,6 +11,8 @@ namespace SyntacticalPetApp
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly SpectrumAnalyser spectrumAnalyser;
+        private readonly AudioPlayback audioPlayback;
+        private readonly AnimationSchedule dogAnimationScheduler;
         private int updateCount;
 
         public MainWindowViewModel()
@@ -21,12 +23,13 @@ namespace SyntacticalPetApp
             {
                 ProgressPanelViewModel = ProgressPanelViewModel
             };
+            DogCommandsViewModel.PartyModeEntered += OnPartyModeEntered;
             var dogAnimator = new Animator();
             Dictionary<string, Animation> dogAnimations = GetDogAnimations();
             DogSpriteViewModel = new SpriteViewModel(dogAnimator) { Animations = dogAnimations };
             DogSpriteViewModel.SetAnimation("idle");
 
-            var dogAnimationScheduler = new AnimationSchedule(new[]
+            dogAnimationScheduler = new AnimationSchedule(new[]
             {
                 new AnimationTime("dance", TimeSpan.FromSeconds(32.08)),
                 new AnimationTime("idle", TimeSpan.FromSeconds(48.10)),
@@ -38,11 +41,15 @@ namespace SyntacticalPetApp
             string fileName = Path.Combine(Directory.GetCurrentDirectory(),
                 "Resources", "Audio", "you_give_me_feelings.mp3");
 
-            var audioPlayback = new AudioPlayback();
+            audioPlayback = new AudioPlayback();
             audioPlayback.FftCalculated += OnFftCalculated;
             audioPlayback.Load(fileName);
-            audioPlayback.Volume = 0;
+            audioPlayback.Volume = 1;
 
+        }
+
+        private void OnPartyModeEntered(object sender, EventArgs e)
+        {
             // Start all animations, audio, timers, etc.
             DogSpriteViewModel.PlayAnim();
             audioPlayback.Play();
