@@ -23,9 +23,9 @@ namespace SyntacticalPetApp
         public EventHandler PartyModeEntered;
         private void EnterPartyMode()
         {
-            MessageBox.Show(messageBoxText: "Party mode has not been implemented yet.", caption: "Error",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-            
+            //MessageBox.Show(messageBoxText: "Party mode has not been implemented yet.", caption: "Error",
+            //    MessageBoxButton.OK, MessageBoxImage.Error);
+
             PartyModeEnabled = true;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PartyModeEnabled)));
             PartyModeEntered?.Invoke(this, EventArgs.Empty);
