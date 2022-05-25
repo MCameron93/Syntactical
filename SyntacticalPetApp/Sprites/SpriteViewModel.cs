@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 
 namespace SyntacticalPetApp.Sprites
 {
     public class SpriteViewModel : INotifyPropertyChanged
     {
         private readonly Animator animator;
+        private Visibility visibility;
 
         public SpriteViewModel(Animator animator)
         {
@@ -19,6 +21,16 @@ namespace SyntacticalPetApp.Sprites
         public Dictionary<string, Animation> Animations { get; set; }
 
         public string ImagePath => animator.CurrentFramePath;
+
+        public Visibility Visibility 
+        { 
+            get => visibility;
+            set
+            {
+                visibility = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Visibility)));
+            }
+        }
 
         public void PlayAnim()
         {

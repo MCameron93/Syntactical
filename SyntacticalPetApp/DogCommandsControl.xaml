@@ -10,6 +10,10 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -28,6 +32,16 @@
             Height="40"
             Command="{Binding PartyCommand}"
             Content="Party"
+            FontSize="16"
+            FontWeight="Bold" />
+
+        <Button
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Width="100"
+            Height="40"
+            Command="{Binding FixAllBugsCommand}"
+            Content="Fix all bugs"
             FontSize="16"
             FontWeight="Bold" />
     </Grid>

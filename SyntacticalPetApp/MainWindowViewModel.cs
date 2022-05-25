@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Windows;
 
 namespace SyntacticalPetApp
 {
@@ -24,6 +25,7 @@ namespace SyntacticalPetApp
                 ProgressPanelViewModel = ProgressPanelViewModel
             };
             DogCommandsViewModel.PartyModeEntered += OnPartyModeEntered;
+            DogCommandsViewModel.BugsFixedEnabled += OnBugsFixed;
             var dogAnimator = new Animator();
             Dictionary<string, Animation> dogAnimations = GetDogAnimations();
             DogSpriteViewModel = new SpriteViewModel(dogAnimator) { Animations = dogAnimations };
@@ -32,8 +34,8 @@ namespace SyntacticalPetApp
             var bugAnimator = new Animator();
             Dictionary<string, Animation> bugAnimations = GetBugAnimations();
             BugSpriteViewModel = new SpriteViewModel(bugAnimator) { Animations = bugAnimations };
+            BugSpriteViewModel.Visibility = Visibility.Hidden;
             BugSpriteViewModel.SetAnimation("dance");
-            BugSpriteViewModel.PlayAnim();
 
             dogAnimationScheduler = new AnimationSchedule(new[]
             {
@@ -152,8 +154,8 @@ namespace SyntacticalPetApp
                 {
                     "/SyntacticalPetApp;component/Resources/Art/bugs_01.png",
                     "/SyntacticalPetApp;component/Resources/Art/bugs_02.png",
-                    "/SyntacticalPetApp;component/Resources/Art/bugs_04.png",
                     "/SyntacticalPetApp;component/Resources/Art/bugs_03.png",
+                    "/SyntacticalPetApp;component/Resources/Art/bugs_04.png",
                 },
                 TimeBetweenFrames = TimeSpan.FromSeconds(danceSecondsPerFrame)
             };
@@ -163,6 +165,11 @@ namespace SyntacticalPetApp
                 { "dance", danceAnimation },
             };
             return animations;
+        }
+
+        private void OnBugsFixed(object sender, EventArgs e)
+        {
+            BugSpriteViewModel.Visibility = Visibility.Visible;
         }
 
         private void OnDogAnimate(object sender, string animationName)
@@ -195,6 +202,8 @@ namespace SyntacticalPetApp
             DogSpriteViewModel.PlayAnim();
             audioPlayback.Play();
             dogAnimationScheduler.Start();
+
+            BugSpriteViewModel.PlayAnim();
         }
     }
 }

@@ -13,6 +13,7 @@
         <Image
             RenderOptions.BitmapScalingMode="NearestNeighbor"
             SnapsToDevicePixels="True"
-            Source="{Binding ImagePath}" />
+            Source="{Binding ImagePath}"
+            Visibility="{Binding Visibility}" />
     </Grid>
 </UserControl>

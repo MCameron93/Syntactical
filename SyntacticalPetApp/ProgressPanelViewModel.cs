@@ -11,7 +11,7 @@ namespace SyntacticalPetApp
             {
                 new ProgressBarViewModel { Label = "Party", MinPercent = 0.5, MaxPercent = 1.0, ScaleValue = 1.0 },
                 new ProgressBarViewModel { Label = "Happiness", MinPercent = 0.6, MaxPercent = 0.8, ScaleValue = 0.5 },
-                new ProgressBarViewModel { Label = "Hungy", MinPercent = 0.5, MaxPercent = 1.0, ScaleValue = 0.25 },
+                new ProgressBarViewModel { Label = "Hungy", Value = 100, MinPercent = 0.5, MaxPercent = 1.0, ScaleValue = 0.25 },
                 new ProgressBarViewModel { Label = "Sleepy", MinPercent = 0.5, MaxPercent = 1.0, ScaleValue = 0.25 },
             };
 
