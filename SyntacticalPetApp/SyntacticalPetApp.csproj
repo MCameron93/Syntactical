@@ -92,12 +92,21 @@
     <Compile Include="Animation\AnimationTime.cs" />
     <Compile Include="Animation\Animation.cs" />
     <Compile Include="Animation\Animator.cs" />
+    <Compile Include="DogCommandsControl.xaml.cs">
+      <DependentUpon>DogCommandsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DogCommandsViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="Sprites\SpriteViewModel.cs" />
     <Compile Include="Sprites\SpriteControl.xaml.cs">
       <DependentUpon>SpriteControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="Audio\ProgressPanelControl.xaml">
+    <Page Include="DogCommandsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProgressPanelControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -114,9 +123,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Audio\AudioPlayback.cs" />
-    <Compile Include="Audio\ProgressBarViewModel.cs" />
-    <Compile Include="Audio\ProgressPanelViewModel.cs" />
-    <Compile Include="Audio\ProgressPanelControl.xaml.cs">
+    <Compile Include="ProgressBarViewModel.cs" />
+    <Compile Include="ProgressPanelViewModel.cs" />
+    <Compile Include="ProgressPanelControl.xaml.cs">
       <DependentUpon>ProgressPanelControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Audio\OldSpectrumAnalyser.xaml.cs">

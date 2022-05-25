@@ -3,11 +3,12 @@ using SyntacticalPetApp.Audio;
 using SyntacticalPetApp.Sprites;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 
 namespace SyntacticalPetApp
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         private readonly SpectrumAnalyser spectrumAnalyser;
         private int updateCount;
@@ -16,12 +17,16 @@ namespace SyntacticalPetApp
         {
             spectrumAnalyser = new SpectrumAnalyser();
             ProgressPanelViewModel = new ProgressPanelViewModel();
+            DogCommandsViewModel = new DogCommandsViewModel
+            {
+                ProgressPanelViewModel = ProgressPanelViewModel
+            };
             var dogAnimator = new Animator();
             Dictionary<string, Animation> dogAnimations = GetDogAnimations();
             DogSpriteViewModel = new SpriteViewModel(dogAnimator) { Animations = dogAnimations };
             DogSpriteViewModel.SetAnimation("idle");
 
-            var dogAnimationScheduler = new AnimationSchedule(new[] 
+            var dogAnimationScheduler = new AnimationSchedule(new[]
             {
                 new AnimationTime("dance", TimeSpan.FromSeconds(32.08)),
                 new AnimationTime("idle", TimeSpan.FromSeconds(48.10)),
@@ -36,7 +41,7 @@ namespace SyntacticalPetApp
             var audioPlayback = new AudioPlayback();
             audioPlayback.FftCalculated += OnFftCalculated;
             audioPlayback.Load(fileName);
-            audioPlayback.Volume = 1;
+            audioPlayback.Volume = 0;
 
             // Start all animations, audio, timers, etc.
             DogSpriteViewModel.PlayAnim();
@@ -44,8 +49,10 @@ namespace SyntacticalPetApp
             dogAnimationScheduler.Start();
         }
 
-        public SpriteViewModel DogSpriteViewModel { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        public DogCommandsViewModel DogCommandsViewModel { get; set; }
+        public SpriteViewModel DogSpriteViewModel { get; set; }
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
 
         private static Dictionary<string, Animation> GetDogAnimations()

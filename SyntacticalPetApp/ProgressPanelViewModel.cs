@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace SyntacticalPetApp.Audio
+namespace SyntacticalPetApp
 {
     public class ProgressPanelViewModel : INotifyPropertyChanged
     {

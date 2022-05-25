@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SyntacticalPetApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sprites="clr-namespace:SyntacticalPetApp.Sprites"
+    xmlns:sprites="clr-namespace:SyntacticalPetApp.Sprites" d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -22,7 +22,10 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <local:ProgressPanelControl x:Name="ProgressPanelControl" DataContext="{Binding ProgressPanelViewModel}" />
-            <local:OldSpectrumAnalyser x:Name="OldSpectrumAnalyser" Grid.Row="1" />
+            <local:DogCommandsControl
+                x:Name="DogCommandsControl"
+                Grid.Row="1"
+                DataContext="{Binding DogCommandsViewModel}" />
         </Grid>
         <Grid Grid.Column="1">
             <sprites:SpriteControl DataContext="{Binding DogSpriteViewModel}" />
