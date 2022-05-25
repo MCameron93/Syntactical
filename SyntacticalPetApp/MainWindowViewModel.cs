@@ -10,9 +10,9 @@ namespace SyntacticalPetApp
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private readonly SpectrumAnalyser spectrumAnalyser;
         private readonly AudioPlayback audioPlayback;
         private readonly AnimationSchedule dogAnimationScheduler;
+        private readonly SpectrumAnalyser spectrumAnalyser;
         private int updateCount;
 
         public MainWindowViewModel()
@@ -28,6 +28,12 @@ namespace SyntacticalPetApp
             Dictionary<string, Animation> dogAnimations = GetDogAnimations();
             DogSpriteViewModel = new SpriteViewModel(dogAnimator) { Animations = dogAnimations };
             DogSpriteViewModel.SetAnimation("idle");
+
+            var bugAnimator = new Animator();
+            Dictionary<string, Animation> bugAnimations = GetBugAnimations();
+            BugSpriteViewModel = new SpriteViewModel(bugAnimator) { Animations = bugAnimations };
+            BugSpriteViewModel.SetAnimation("dance");
+            BugSpriteViewModel.PlayAnim();
 
             dogAnimationScheduler = new AnimationSchedule(new[]
             {
@@ -45,21 +51,16 @@ namespace SyntacticalPetApp
             audioPlayback.FftCalculated += OnFftCalculated;
             audioPlayback.Load(fileName);
             audioPlayback.Volume = 1;
-
-        }
-
-        private void OnPartyModeEntered(object sender, EventArgs e)
-        {
-            // Start all animations, audio, timers, etc.
-            DogSpriteViewModel.PlayAnim();
-            audioPlayback.Play();
-            dogAnimationScheduler.Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public SpriteViewModel BugSpriteViewModel { get; set; }
+
         public DogCommandsViewModel DogCommandsViewModel { get; set; }
+
         public SpriteViewModel DogSpriteViewModel { get; set; }
+
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
 
         private static Dictionary<string, Animation> GetDogAnimations()
@@ -81,7 +82,7 @@ namespace SyntacticalPetApp
                 return secondsPerFrame;
             }
 
-            var dogDanceAnim = new Animation()
+            var danceAnimation = new Animation()
             {
                 FramePaths = new[]
                 {
@@ -93,7 +94,7 @@ namespace SyntacticalPetApp
                 TimeBetweenFrames = TimeSpan.FromSeconds(danceSecondsPerFrame)
             };
 
-            var dogDanceBAnim = new Animation()
+            var danceBAnimation = new Animation()
             {
                 FramePaths = new[]
                 {
@@ -105,7 +106,7 @@ namespace SyntacticalPetApp
                 TimeBetweenFrames = TimeSpan.FromSeconds(danceSecondsPerFrame)
             };
 
-            var dogIdleAnim = new Animation()
+            var idleAnimation = new Animation()
             {
                 FramePaths = new[]
                 {
@@ -117,13 +118,51 @@ namespace SyntacticalPetApp
                 TimeBetweenFrames = TimeSpan.FromSeconds(idleSecondsPerFrame)
             };
 
-            var dogAnimations = new Dictionary<string, Animation>
+            var animations = new Dictionary<string, Animation>
             {
-                { "idle", dogIdleAnim },
-                { "dance", dogDanceAnim },
-                { "dance_b", dogDanceBAnim }
+                { "idle", idleAnimation },
+                { "dance", danceAnimation },
+                { "dance_b", danceBAnimation }
             };
-            return dogAnimations;
+            return animations;
+        }
+
+        private Dictionary<string, Animation> GetBugAnimations()
+        {
+            // Work out how many seconds there are between each frame based on beats per minute of
+            // the song. We know this is 120 bpm for the song being used here.
+            const int beatsPerMinute = 120;
+            const int beatsPerSecond = beatsPerMinute / 60;
+
+            // Frames per beat is decided per animation. i.e. How many frames of animation should
+            // there be between each beat in the song.
+            double danceSecondsPerFrame = GetSecondsPerFrame(framesPerBeat: 2);
+            double idleSecondsPerFrame = GetSecondsPerFrame(framesPerBeat: 4);
+
+            double GetSecondsPerFrame(int framesPerBeat)
+            {
+                int framesPerSecond = framesPerBeat * beatsPerSecond;
+                double secondsPerFrame = 1.0 / framesPerSecond;
+                return secondsPerFrame;
+            }
+
+            var danceAnimation = new Animation()
+            {
+                FramePaths = new[]
+                {
+                    "/SyntacticalPetApp;component/Resources/Art/bugs_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/bugs_02.png",
+                    "/SyntacticalPetApp;component/Resources/Art/bugs_04.png",
+                    "/SyntacticalPetApp;component/Resources/Art/bugs_03.png",
+                },
+                TimeBetweenFrames = TimeSpan.FromSeconds(danceSecondsPerFrame)
+            };
+
+            var animations = new Dictionary<string, Animation>
+            {
+                { "dance", danceAnimation },
+            };
+            return animations;
         }
 
         private void OnDogAnimate(object sender, string animationName)
@@ -148,6 +187,14 @@ namespace SyntacticalPetApp
             //{
             //    OldSpectrumAnalyser.Update(e.Result);
             //}
+        }
+
+        private void OnPartyModeEntered(object sender, EventArgs e)
+        {
+            // Start all animations, audio, timers, etc.
+            DogSpriteViewModel.PlayAnim();
+            audioPlayback.Play();
+            dogAnimationScheduler.Start();
         }
     }
 }

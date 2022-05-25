@@ -31,6 +31,7 @@
         </Grid>
         <Grid Grid.Column="1">
             <sprites:SpriteControl DataContext="{Binding DogSpriteViewModel}" />
+            <sprites:SpriteControl DataContext="{Binding BugSpriteViewModel}" />
         </Grid>
     </Grid>
 </Window>

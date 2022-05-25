@@ -180,6 +180,10 @@
     <Resource Include="Resources\Art\zach_dance_b_01.png" />
     <Resource Include="Resources\Art\zach_dance_b_02.png" />
     <Resource Include="Resources\Art\zach_dance_b_03.png" />
+    <Resource Include="Resources\Art\bugs_01.png" />
+    <Resource Include="Resources\Art\bugs_02.png" />
+    <Resource Include="Resources\Art\bugs_03.png" />
+    <Resource Include="Resources\Art\bugs_04.png" />
     <Content Include="Resources\Audio\you_give_me_feelings.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
