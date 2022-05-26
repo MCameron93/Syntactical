@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Timers;
 using System.Windows;
 
 namespace SyntacticalPetApp
@@ -15,6 +16,7 @@ namespace SyntacticalPetApp
         private readonly AnimationSchedule dogAnimationScheduler;
         private readonly SpectrumAnalyser spectrumAnalyser;
         private int updateCount;
+        private Timer lightsTimer;
 
         public MainWindowViewModel()
         {
@@ -37,11 +39,24 @@ namespace SyntacticalPetApp
             BugSpriteViewModel.Visibility = Visibility.Hidden;
             BugSpriteViewModel.SetAnimation("dance");
 
+            var lightsAnimator = new Animator();
+            Dictionary<string, Animation> lightsAnimation = GetLightsAnimations();
+            LightsSpriteViewModel = new SpriteViewModel(lightsAnimator) { Animations = lightsAnimation };
+            LightsSpriteViewModel.Visibility = Visibility.Hidden;
+            LightsSpriteViewModel.SetAnimation("dance");
+            lightsTimer = new Timer();
+            lightsTimer.AutoReset = false;
+            lightsTimer.Interval = (TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(24.08)).TotalMilliseconds;
+            lightsTimer.Elapsed += OnLightsTimerElapsed;
+
             dogAnimationScheduler = new AnimationSchedule(new[]
             {
                 new AnimationTime("dance", TimeSpan.FromSeconds(32.08)),
                 new AnimationTime("idle", TimeSpan.FromSeconds(48.10)),
                 new AnimationTime("dance_b", TimeSpan.FromMinutes(1) + TimeSpan.FromSeconds(4.09)),
+                new AnimationTime("dance", TimeSpan.FromMinutes(1) + TimeSpan.FromSeconds(36.10)),
+                new AnimationTime("idle", TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(08.11)),
+                new AnimationTime("dance_b", TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(24.08)),
             });
             dogAnimationScheduler.Animate += OnDogAnimate;
 
@@ -62,6 +77,8 @@ namespace SyntacticalPetApp
         public DogCommandsViewModel DogCommandsViewModel { get; set; }
 
         public SpriteViewModel DogSpriteViewModel { get; set; }
+
+        public SpriteViewModel LightsSpriteViewModel { get; set; }
 
         public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
 
@@ -167,6 +184,42 @@ namespace SyntacticalPetApp
             return animations;
         }
 
+        private Dictionary<string, Animation> GetLightsAnimations()
+        {
+            // Work out how many seconds there are between each frame based on beats per minute of
+            // the song. We know this is 120 bpm for the song being used here.
+            const int beatsPerMinute = 120;
+            const int beatsPerSecond = beatsPerMinute / 60;
+
+            // Frames per beat is decided per animation. i.e. How many frames of animation should
+            // there be between each beat in the song.
+            double danceSecondsPerFrame = GetSecondsPerFrame(framesPerBeat: 1);
+            double idleSecondsPerFrame = GetSecondsPerFrame(framesPerBeat: 4);
+
+            double GetSecondsPerFrame(int framesPerBeat)
+            {
+                int framesPerSecond = framesPerBeat * beatsPerSecond;
+                double secondsPerFrame = 1.0 / framesPerSecond;
+                return secondsPerFrame;
+            }
+
+            var danceAnimation = new Animation()
+            {
+                FramePaths = new[]
+                {
+                    "/SyntacticalPetApp;component/Resources/Art/lights_01.png",
+                    "/SyntacticalPetApp;component/Resources/Art/lights_02.png"
+                },
+                TimeBetweenFrames = TimeSpan.FromSeconds(danceSecondsPerFrame)
+            };
+
+            var animations = new Dictionary<string, Animation>
+            {
+                { "dance", danceAnimation },
+            };
+            return animations;
+        }
+
         private void OnBugsFixed(object sender, EventArgs e)
         {
             BugSpriteViewModel.Visibility = Visibility.Visible;
@@ -196,6 +249,11 @@ namespace SyntacticalPetApp
             //}
         }
 
+        private void OnLightsTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            LightsSpriteViewModel.Visibility = Visibility.Visible;
+        }
+
         private void OnPartyModeEntered(object sender, EventArgs e)
         {
             // Start all animations, audio, timers, etc.
@@ -204,6 +262,8 @@ namespace SyntacticalPetApp
             dogAnimationScheduler.Start();
 
             BugSpriteViewModel.PlayAnim();
+            LightsSpriteViewModel.PlayAnim();
+            lightsTimer.Start();
         }
     }
 }

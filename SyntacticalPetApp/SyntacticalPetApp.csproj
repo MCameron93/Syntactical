@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
@@ -184,6 +187,9 @@
     <Resource Include="Resources\Art\bugs_02.png" />
     <Resource Include="Resources\Art\bugs_03.png" />
     <Resource Include="Resources\Art\bugs_04.png" />
+    <Resource Include="icon.ico" />
+    <Resource Include="Resources\Art\lights_01.png" />
+    <Resource Include="Resources\Art\lights_02.png" />
     <Content Include="Resources\Audio\you_give_me_feelings.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

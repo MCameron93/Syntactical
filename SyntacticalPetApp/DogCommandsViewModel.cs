@@ -11,6 +11,7 @@ namespace SyntacticalPetApp
 
         public EventHandler PartyModeEntered;
 
+        private bool bugsFixed;
         private RelayCommand fixAllBugsCommand;
 
         private RelayCommand fixAllBugsCommand1;
@@ -32,7 +33,7 @@ namespace SyntacticalPetApp
             {
                 if (fixAllBugsCommand1 == null)
                 {
-                    fixAllBugsCommand1 = new RelayCommand(FixAllBugs, _=> !BugsFixed);
+                    fixAllBugsCommand1 = new RelayCommand(FixAllBugs, _ => !BugsFixed);
                 }
 
                 return fixAllBugsCommand1;
@@ -40,7 +41,7 @@ namespace SyntacticalPetApp
         }
 
         public ICommand PartyCommand { get; }
-        public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
+
         public bool PartyModeEnabled
         {
             get => partyModeEnabled;
@@ -52,12 +53,16 @@ namespace SyntacticalPetApp
             }
         }
 
-        private bool bugsFixed;
+        public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
+
         private bool BugsFixed
         {
             get => bugsFixed;
             set
             {
+                MessageBox.Show(messageBoxText: "You thought it would be that easy?", caption: "Oh no!",
+                    MessageBoxButton.OK, MessageBoxImage.Question);
+
                 bugsFixed = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BugsFixed)));
                 BugsFixedEnabled?.Invoke(this, EventArgs.Empty);
@@ -81,7 +86,7 @@ namespace SyntacticalPetApp
 
         private void FixAllBugs(object commandParameter)
         {
-            MessageBox.Show(messageBoxText: "You thought it would be that easy?", caption: "Idiot",
+            MessageBox.Show(messageBoxText: "You forgot to implement the bug fix logic!", caption: "Woops",
                 MessageBoxButton.OK, MessageBoxImage.Error);
 
             //BugsFixed = true;
