@@ -53,7 +53,7 @@ namespace SyntacticalPetApp
             }
         }
 
-        public ProgressPanelViewModel ProgressPanelViewModel { get; set; }
+        public ProgressPanelViewModel StatusViewModel { get; set; }
 
         private bool BugsFixed
         {
@@ -69,19 +69,35 @@ namespace SyntacticalPetApp
             }
         }
 
-        private void EnterPartyMode()
-        {
-            MessageBox.Show(messageBoxText: "Party mode has not been implemented yet.", caption: "Error",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+        private double Happiness => StatusViewModel.Bars[1].Value;
 
-            //PartyModeEnabled = true;
+        private void IncreaseHappiness()
+        {
+            StatusViewModel.Bars[1].Value += 20;
+        }
+
+        private void DecreaseHunger()
+        {
+            StatusViewModel.Bars[2].Value -= 10;
         }
 
         private void Feed()
         {
             // Note: It's bad form to overfeed your dogs.
-            ProgressPanelViewModel.ProgressBars[1].Value += 10;
-            ProgressPanelViewModel.ProgressBars[2].Value -= 10;
+            DecreaseHunger();
+        }
+
+        private void EnterPartyMode()
+        {
+            if (Happiness < 100)
+            {
+                MessageBox.Show(messageBoxText: "Only happy dogs can party.", caption: "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
+            MessageBox.Show(messageBoxText: "Party mode has not been implemented yet.", caption: "Error",
+                MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void FixAllBugs(object commandParameter)
@@ -89,7 +105,6 @@ namespace SyntacticalPetApp
             MessageBox.Show(messageBoxText: "You forgot to implement the bug fix logic!", caption: "Woops",
                 MessageBoxButton.OK, MessageBoxImage.Error);
 
-            //BugsFixed = true;
         }
     }
 }

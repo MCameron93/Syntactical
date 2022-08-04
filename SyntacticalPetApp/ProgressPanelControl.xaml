@@ -11,7 +11,7 @@
             Background="Transparent"
             BorderBrush="Transparent"
             Grid.IsSharedSizeScope="true"
-            ItemsSource="{Binding ProgressBars}"
+            ItemsSource="{Binding Bars}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

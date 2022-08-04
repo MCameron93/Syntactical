@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syntactical", "Syntactical\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntacticalPetApp", "SyntacticalPetApp\SyntacticalPetApp.csproj", "{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syntactical.MoonFinder", "Syntactical.MoonFinder\Syntactical.MoonFinder.csproj", "{01C62001-F2D6-4960-AFC6-9796CF4E6760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDFE0402-5F68-43BC-A5A2-993AEC70CA93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01C62001-F2D6-4960-AFC6-9796CF4E6760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C62001-F2D6-4960-AFC6-9796CF4E6760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C62001-F2D6-4960-AFC6-9796CF4E6760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C62001-F2D6-4960-AFC6-9796CF4E6760}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

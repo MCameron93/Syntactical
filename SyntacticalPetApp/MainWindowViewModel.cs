@@ -24,7 +24,7 @@ namespace SyntacticalPetApp
             ProgressPanelViewModel = new ProgressPanelViewModel();
             DogCommandsViewModel = new DogCommandsViewModel
             {
-                ProgressPanelViewModel = ProgressPanelViewModel
+                StatusViewModel = ProgressPanelViewModel
             };
             DogCommandsViewModel.PartyModeEntered += OnPartyModeEntered;
             DogCommandsViewModel.BugsFixedEnabled += OnBugsFixed;
@@ -239,7 +239,7 @@ namespace SyntacticalPetApp
             }
 
             double[] percentages = spectrumAnalyser.GetPercentages(e.Result,
-                samples: ProgressPanelViewModel.ProgressBars.Length, pointsPerSample: 1);
+                samples: ProgressPanelViewModel.Bars.Length, pointsPerSample: 1);
 
             ProgressPanelViewModel.UpdatePercentages(percentages);
 

@@ -15,10 +15,10 @@ namespace SyntacticalPetApp
                 new ProgressBarViewModel { Label = "Sleepy", MinPercent = 0.5, MaxPercent = 1.0, ScaleValue = 0.25 },
             };
 
-            ProgressBars = progressBars;
+            Bars = progressBars;
         }
 
-        public ProgressBarViewModel[] ProgressBars { get; set; }
+        public ProgressBarViewModel[] Bars { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,16 +26,16 @@ namespace SyntacticalPetApp
         {
             for (int i = 0; i < percentages.Length; i++)
             {
-                double min = ProgressBars[i].MinPercent;
-                double max = ProgressBars[i].MaxPercent;
+                double min = Bars[i].MinPercent;
+                double max = Bars[i].MaxPercent;
                 double input = 1 - percentages[i];
                 double val = (input - min) / (max - min);
-                double scaleValue = ProgressBars[i].ScaleValue;
+                double scaleValue = Bars[i].ScaleValue;
 
-                ProgressBars[i].Value = Math.Max(5, val * scaleValue * 100);
+                Bars[i].Value = Math.Max(5, val * scaleValue * 100);
             }
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProgressBars)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Bars)));
         }
     }
 }
