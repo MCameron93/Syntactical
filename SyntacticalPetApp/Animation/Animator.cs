@@ -17,13 +17,15 @@ namespace SyntacticalPetApp.Sprites
             frameTimer.Elapsed += FrameTimer_Elapsed;
         }
 
-        public string CurrentFramePath => currentAnimation.FramePaths[currentFrame];
+        public string CurrentFramePath => currentAnimation != null ? currentAnimation.FramePaths[currentFrame] : String.Empty;
 
         public void SetAnimation(Animation animation)
         {
             currentAnimation = animation;
             frameTimer.Interval = animation.TimeBetweenFrames.TotalMilliseconds;
             frameTimer.Stop();
+            currentFrame = 0;
+            FrameChanged?.Invoke(this, EventArgs.Empty);
         }
 
         internal void Play()

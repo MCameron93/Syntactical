@@ -190,6 +190,11 @@
     <Resource Include="icon.ico" />
     <Resource Include="Resources\Art\lights_01.png" />
     <Resource Include="Resources\Art\lights_02.png" />
+    <Resource Include="Resources\Art\zach_sit_howl_01.png" />
+    <Resource Include="Resources\Art\zach_sit_idle_01.png" />
+    <Content Include="Resources\Audio\bark.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Audio\you_give_me_feelings.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

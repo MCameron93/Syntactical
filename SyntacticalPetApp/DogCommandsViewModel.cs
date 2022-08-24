@@ -8,6 +8,7 @@ namespace SyntacticalPetApp
     public class DogCommandsViewModel : INotifyPropertyChanged
     {
         public EventHandler BugsFixedEnabled;
+        public EventHandler DogFed;
 
         public EventHandler PartyModeEntered;
 
@@ -19,7 +20,7 @@ namespace SyntacticalPetApp
 
         public DogCommandsViewModel()
         {
-            FeedCommand = new RelayCommand(_ => Feed());
+            FeedCommand = new RelayCommand(_ => Feed(), _ => !PartyModeEnabled);
             PartyCommand = new RelayCommand(_ => EnterPartyMode(), _ => !PartyModeEnabled);
         }
 
@@ -85,6 +86,8 @@ namespace SyntacticalPetApp
         {
             // Note: It's bad form to overfeed your dogs.
             DecreaseHunger();
+            //IncreaseHappiness();
+            //DogFed?.Invoke(this, EventArgs.Empty);
         }
 
         private void EnterPartyMode()
@@ -98,13 +101,16 @@ namespace SyntacticalPetApp
             
             MessageBox.Show(messageBoxText: "Party mode has not been implemented yet.", caption: "Error",
                 MessageBoxButton.OK, MessageBoxImage.Error);
+            
+            //PartyModeEnabled = true;
         }
 
         private void FixAllBugs(object commandParameter)
         {
             MessageBox.Show(messageBoxText: "You forgot to implement the bug fix logic!", caption: "Woops",
                 MessageBoxButton.OK, MessageBoxImage.Error);
-
+            
+            //BugsFixed = true;
         }
     }
 }

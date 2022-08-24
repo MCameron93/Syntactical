@@ -28,10 +28,11 @@ namespace SyntacticalPetApp
             };
             DogCommandsViewModel.PartyModeEntered += OnPartyModeEntered;
             DogCommandsViewModel.BugsFixedEnabled += OnBugsFixed;
+            DogCommandsViewModel.DogFed += OnDogFed;
             var dogAnimator = new Animator();
             Dictionary<string, Animation> dogAnimations = GetDogAnimations();
             DogSpriteViewModel = new SpriteViewModel(dogAnimator) { Animations = dogAnimations };
-            DogSpriteViewModel.SetAnimation("idle");
+            DogSpriteViewModel.SetAnimation("idle_sit");
 
             var bugAnimator = new Animator();
             Dictionary<string, Animation> bugAnimations = GetBugAnimations();
@@ -68,6 +69,31 @@ namespace SyntacticalPetApp
             audioPlayback.FftCalculated += OnFftCalculated;
             audioPlayback.Load(fileName);
             audioPlayback.Volume = 1;
+        }
+
+        private void OnDogFed(object sender, EventArgs e)
+        {
+            DogSpriteViewModel?.SetAnimation("idle_howl");
+
+            string barkFilename = Path.Combine(Directory.GetCurrentDirectory(),
+                "Resources", "Audio", "bark.mp3");
+
+            var barkAudio = new AudioPlayback();
+            barkAudio.Load(barkFilename);
+            barkAudio.Volume = 1;
+            barkAudio.Play();
+
+            var timer = new Timer();
+            timer.Interval = TimeSpan.FromSeconds(0.25).TotalMilliseconds;
+            timer.AutoReset = false;
+            timer.Elapsed += OnIdleHowlTimerElapsed;
+            timer.Start();
+
+        }
+
+        private void OnIdleHowlTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            DogSpriteViewModel?.SetAnimation("idle_sit");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -137,8 +163,28 @@ namespace SyntacticalPetApp
                 TimeBetweenFrames = TimeSpan.FromSeconds(idleSecondsPerFrame)
             };
 
+            var idleSitAnimation = new Animation()
+            {
+                FramePaths = new[]
+                {
+                    "/SyntacticalPetApp;component/Resources/Art/zach_sit_idle_01.png",
+                },
+                TimeBetweenFrames = TimeSpan.FromSeconds(1)
+            };
+
+            var idleHowlAnimation = new Animation()
+            {
+                FramePaths = new[]
+                {
+                    "/SyntacticalPetApp;component/Resources/Art/zach_sit_howl_01.png",
+                },
+                TimeBetweenFrames = TimeSpan.FromSeconds(1)
+            };
+
             var animations = new Dictionary<string, Animation>
             {
+                { "idle_sit", idleSitAnimation},
+                { "idle_howl", idleHowlAnimation},
                 { "idle", idleAnimation },
                 { "dance", danceAnimation },
                 { "dance_b", danceBAnimation }
@@ -257,6 +303,7 @@ namespace SyntacticalPetApp
         private void OnPartyModeEntered(object sender, EventArgs e)
         {
             // Start all animations, audio, timers, etc.
+            DogSpriteViewModel.SetAnimation("idle");
             DogSpriteViewModel.PlayAnim();
             audioPlayback.Play();
             dogAnimationScheduler.Start();
